@@ -10,7 +10,8 @@ namespace Based_Adventure
         {
             Console.Clear();
             Console.WriteLine("You use the key on a locked door and walk in. \n" + "Inside the locked room you find a shiny sword");
-
+            
+            // Player can choose to switch swords
             if (Program.AskYesOrNo("Do you want it instead of your wooden sword? Yes/No: "))
             {
                 hero.Items.Remove("Wooden Sword");

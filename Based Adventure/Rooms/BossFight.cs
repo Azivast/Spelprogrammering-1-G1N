@@ -42,7 +42,7 @@ namespace Based_Adventure
                     switch (playerChoice)
                     {
                         case "attack":
-                            int heroAttack = hero.HeroAttack();
+                            int heroAttack = hero.HeroAttack(enemy);
                             enemy.Damage(heroAttack);
                             if (monsterAttack == 0)
                                 Console.WriteLine($"The {enemy.Name} catches their breath.");
@@ -72,14 +72,17 @@ namespace Based_Adventure
 
                         case "parry":
                             if (monsterAttack == 0)
-                                Console.WriteLine($"The {enemy.Name} catches their breath.");
+                                Console.WriteLine($"The {enemy.Name} catches their breath. " +
+                                                  $"There is nothing to parry.");
                             else if (roll >= 5)
                             {
                                 monsterAttack = monsterAttack / 2;
                                 enemy.Damage(monsterAttack);
-                                hero.Damage(monsterAttack);
+                                hero.Damage(monsterAttack/2);
                                 Console.WriteLine($"You attempt to parry the {enemy.Name}'s attack.\n" +
-                                                  $"You both stumbles and take {monsterAttack} damage each.\n");
+                                                  $"You both stumble. " +
+                                                  $"You take {monsterAttack/2} damage and " +
+                                                  $"the {enemy.Name} takes {monsterAttack} damage.\n");
                             }
                             else
                             {

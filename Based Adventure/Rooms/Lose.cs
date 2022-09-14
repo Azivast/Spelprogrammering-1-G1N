@@ -12,7 +12,7 @@ namespace Based_Adventure
             Console.WriteLine($"The {enemy.Name} lands a deep cut and you stumble backwards. " +
                               "You feel light headed and your consciousness slips away." + 
                               "Your body lies lifeless on the floor.\n" +
-                              $"You lose {hero.Name}.");
+                              $"You lose {hero.Name}. Tough luck");
             hero.Location ="gameover";
         }
     }

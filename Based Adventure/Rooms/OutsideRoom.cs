@@ -18,7 +18,7 @@ namespace Based_Adventure
                 Console.WriteLine("Negative energy flows from the cursed necklace as the monster approaches.\n");
 
             string weaponChoice;
-            if (!hero.Items.Contains("Knife")) // player has no (kn/l)ife
+            if (!hero.Items.Contains("Knife")) // player has no knife
             {
                 if (hero.Items.Contains("Wooden Sword"))
                 {

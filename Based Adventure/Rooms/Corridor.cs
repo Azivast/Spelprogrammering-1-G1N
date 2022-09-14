@@ -37,6 +37,10 @@ namespace Based_Adventure
                     case "left":
                         hero.Location = "thirdroom";
                         break;
+                    default:
+                        Console.WriteLine("That is not a valid option. ");
+                        answer = "";
+                        break;
                 }
             } while (answer == "");
         }

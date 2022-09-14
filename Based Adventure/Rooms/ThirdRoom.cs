@@ -31,7 +31,7 @@ namespace Based_Adventure
                               "Press any key to continue.");
             Console.ReadKey();
             
-            hero.Location = "outsideroom";
+            hero.Location = "breakroom";
         }
     }
 }

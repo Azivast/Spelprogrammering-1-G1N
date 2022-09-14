@@ -17,11 +17,12 @@ namespace Based_Adventure
         {
             Health = maxHealth;
         }
-
+        
+        // Checks what weapon the player is using and returning the damage dealt.
         public int HeroAttack(Enemy enemy)
         {
             int damage = 0;
-            Console.WriteLine("Roll the dice to determine your attack damage\n" + "Press any key to roll");
+            Console.WriteLine("Roll to determine your attack damage\n" + "Press any key to roll");
             Console.ReadKey();
             Console.Clear();
             if (EquipedWeapon == "Shiny Sword")
@@ -35,7 +36,7 @@ namespace Based_Adventure
             else if (EquipedWeapon == "Wooden Sword")
             {
                 damage = new Random().Next() % 7 + 2; // 2-8 damage
-                Console.WriteLine("You give the minotaur a splinter with your wooden sword. \n" + 
+                Console.WriteLine($"You give the {enemy.Name} a splinter with your wooden sword. \n" + 
                                   $"Your attack deals {damage} damage");
                 return damage;
             }

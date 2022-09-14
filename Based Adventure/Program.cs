@@ -13,10 +13,12 @@ namespace Based_Adventure
 
             Hero hero = new Hero();
             Enemy boss = new Enemy("Minotaur", 100);
+            Enemy dummy = new Enemy("Dummy", 0);
             while (hero.Location != "quit")
             {
                 switch (hero.Location)
                 {
+                    // Controls which room the player is in.
                     case "newgame":
                         hero = new Hero();
                         Rooms.NewGame(hero);
@@ -32,6 +34,12 @@ namespace Based_Adventure
                         break;
                     case "thirdroom":
                         Rooms.ThirdRoom(hero);
+                        break;
+                    case "breakroom":
+                        Rooms.BreakRoom(hero);
+                        break;
+                    case "trainingroom":
+                        Rooms.TrainingRoom(hero, dummy);
                         break;
                     case "outsideroom":
                         Rooms.OutsideRoom(hero);
@@ -54,6 +62,7 @@ namespace Based_Adventure
                         break;
                 }
             }
+            // End of game loop, game exits.
             Console.Clear();
             Console.WriteLine("Thank you for playing the game. Be well traveler.");
         }
@@ -78,10 +87,13 @@ namespace Based_Adventure
                 switch (response)
                 {
                     case "yes":
+                    case "y" :
                     case "ok":
                         return true;
                     case "no":
+                    case "n":
                         return false;
+                    
                 }
             }
         }
