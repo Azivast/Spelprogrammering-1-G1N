@@ -9,9 +9,9 @@ namespace Based_Adventure
         public static void Lose(Hero hero, Enemy enemy)
         {
             Console.Clear();
-            Console.WriteLine($"The {enemy.Name} lands a deep cut and you stumble backwards." +
+            Console.WriteLine($"The {enemy.Name} lands a deep cut and you stumble backwards. " +
                               "You feel light headed and your consciousness slips away." + 
-                              "Your body lie lifeless on the floor.\n" +
+                              "Your body lies lifeless on the floor.\n" +
                               $"You lose {hero.Name}.");
             hero.Location ="gameover";
         }

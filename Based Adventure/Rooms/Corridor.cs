@@ -16,7 +16,7 @@ namespace Based_Adventure
             string answer;
             do
             {
-                answer = Program.Ask("Right or left?: ");
+                answer = Program.Ask("Right or Left?: ");
                 switch (answer.ToLower())
                 {
                     case "right":

@@ -11,7 +11,8 @@ namespace Based_Adventure
         {
             Console.WriteLine("Welcome to Text Adventure!");
 
-            Hero hero = new Hero();;
+            Hero hero = new Hero();
+            Enemy boss = new Enemy("Minotaur", 100);
             while (hero.Location != "quit")
             {
                 switch (hero.Location)
@@ -36,21 +37,25 @@ namespace Based_Adventure
                         Rooms.OutsideRoom(hero);
                         break;
                     case "bossfight":
-                        Enemy boss = new Enemy("Minotaur", 50);
+                        boss = new Enemy("Minotaur", 100);
                         Rooms.BossFight(hero, boss);
+                        break;
+                    case "win":
+                        Rooms.Win(hero, boss);
+                        break;
+                    case "lose":
+                        Rooms.Lose(hero, boss);
+                        break;
+                    case "gameover":
+                        Rooms.GameOver(hero, boss);
                         break;
                     default:
                         Console.Error.WriteLine($"You forgot to implement '{hero.Location}'!");
                         break;
                 }
-                
             }
-            string name = "";
-
-            do
-            {
-                name = Ask("What is your name, Adventurer? ");
-            } while (!AskYesOrNo($"So, {name} it is?  Yes/No: "));
+            Console.Clear();
+            Console.WriteLine("Thank you for playing the game. Be well traveler.");
         }
 
         public static string Ask(string question)

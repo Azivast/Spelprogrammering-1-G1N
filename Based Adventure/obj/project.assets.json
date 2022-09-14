@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\a22ollas\\RiderProjects\\Based Adventure\\Based Adventure\\Based Adventure.csproj",
+      "projectUniqueName": "C:\\Users\\a22ollas\\RiderProjects\\Text-Based-Adventure\\Based Adventure\\Based Adventure.csproj",
       "projectName": "Based Adventure",
-      "projectPath": "C:\\Users\\a22ollas\\RiderProjects\\Based Adventure\\Based Adventure\\Based Adventure.csproj",
+      "projectPath": "C:\\Users\\a22ollas\\RiderProjects\\Text-Based-Adventure\\Based Adventure\\Based Adventure.csproj",
       "packagesPath": "C:\\Users\\a22ollas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\a22ollas\\RiderProjects\\Based Adventure\\Based Adventure\\obj\\",
+      "outputPath": "C:\\Users\\a22ollas\\RiderProjects\\Text-Based-Adventure\\Based Adventure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\a22ollas\\AppData\\Roaming\\NuGet\\NuGet.Config"

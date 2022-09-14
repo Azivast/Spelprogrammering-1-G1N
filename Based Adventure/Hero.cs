@@ -18,22 +18,23 @@ namespace Based_Adventure
             Health = maxHealth;
         }
 
-        public int HeroAttack()
+        public int HeroAttack(Enemy enemy)
         {
             int damage = 0;
             Console.WriteLine("Roll the dice to determine your attack damage\n" + "Press any key to roll");
             Console.ReadKey();
+            Console.Clear();
             if (EquipedWeapon == "Shiny Sword")
             {
                 damage = new Random().Next() % 6 + 15; // 15-20 damage
-                Console.WriteLine("You slice though the tough hide of the minotaur. \n" + 
+                Console.WriteLine($"You slice though the tough hide of the {enemy.Name}. \n" + 
                                   $"Your attack deals {damage} damage");
                 return damage;
 
             }
             else if (EquipedWeapon == "Wooden Sword")
             {
-                damage = new Random().Next() % 7 + 10; // 10-16 damage
+                damage = new Random().Next() % 7 + 2; // 2-8 damage
                 Console.WriteLine("You give the minotaur a splinter with your wooden sword. \n" + 
                                   $"Your attack deals {damage} damage");
                 return damage;
@@ -54,6 +55,7 @@ namespace Based_Adventure
             Health = Math.Clamp(Health + amount, 0, maxHealth); // clamp => cant heal past MaxHealth
         }
         
+        // Damage to player
         public void Damage(int amount)
         {
             Health -= amount;

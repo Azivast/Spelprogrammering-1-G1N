@@ -9,9 +9,9 @@ namespace Based_Adventure
         public static void Win(Hero hero, Enemy enemy)
         {
             Console.Clear();
-            Console.WriteLine($"$The {enemy.Name} takes a step back and collapses on the floor." +
-                              "Its body lie lifeless.\n\n" +
-                              "You continue past it and go through the last door." + 
+            Console.WriteLine($"The {enemy.Name} takes a step back and collapses on the floor. " +
+                              "Its body lies lifeless.\n\n" +
+                              "You continue past it and go through the last door.\n" + 
                               $"Outside freedom greets you. Congratulations {hero.Name}, you win!");
             hero.Location ="gameover";
         }

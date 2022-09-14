@@ -16,12 +16,20 @@ namespace Based_Adventure
             Health = maxHealth;
         }
         
-        public int RollEnemyDamage(Hero hero)
+        // Attacks or Defends based on random chance
+        public int EnemyTurn(Hero hero)
         {
-            if (hero.Items.Contains("Cursed Amulet"))
-                return new Random().Next() % 6 + 10; // 10-15 damage
+            int roll = Program.RollD6();
 
-            else return new Random().Next() % 6 + 5; // 5-10 damage
+            if (roll >= 3) // attack
+            {
+                if (hero.Items.Contains("Cursed Amulet"))
+                    return new Random().Next() % 6 + 10; // 10-15 damage
+
+                else return new Random().Next() % 6 + 5; // 5-10 damage
+            }
+            // else
+            return 0;
         }
         
         public void Damage(int amount)

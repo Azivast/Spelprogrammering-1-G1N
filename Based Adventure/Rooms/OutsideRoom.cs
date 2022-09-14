@@ -10,7 +10,12 @@ namespace Based_Adventure
         {
             Console.Clear();
             Console.WriteLine("As you enter the room a large minotaur wakes up and takes out his weapon. " +
-                              "Prepare for battle!");
+                              "Prepare for battle\n");
+            
+            if(hero.Items.Contains("Blessed Amulet"))
+                Console.WriteLine("The blessed necklace shines as the monster approaches.\n");
+            else if(hero.Items.Contains("Cursed Amulet"))
+                Console.WriteLine("Negative energy flows from the cursed necklace as the monster approaches.\n");
 
             string weaponChoice;
             if (!hero.Items.Contains("Knife")) // player has no (kn/l)ife
