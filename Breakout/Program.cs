@@ -17,6 +17,7 @@ namespace Breakout
             Clock clock = new Clock();
             Ball ball = new Ball();
             Paddle paddle = new Paddle();
+            Tile tile = new Tile();
 
             using (RenderWindow window = new RenderWindow(new VideoMode(500, 700), "Breakfast"))
             {
@@ -26,16 +27,25 @@ namespace Breakout
                     window.DispatchEvents();
                     paddle.Update(ball, deltaTime);
                     ball.Update(deltaTime, paddle);
+                    tile.Update(deltaTime, ball);
 
                     if (ball.Health <= 0) // player lost
                     {
-                        ball.Reset();
-                        //paddle.Reset();
+                        ball.Reset(true);
+                        paddle.Reset();
+                        tile.Reset();
+                    }
+
+                    if (tile.Sprites.Count == 0)
+                    {
+                        ball.Reset(false);
+                        tile.Reset();
                     }
                     
-                    window.Clear(new Color(131, 197, 235));
+                    window.Clear(new Color(20, 20, 70));
                     paddle.Draw(window);
                     ball.Draw(window);
+                    tile.Draw(window);
                     window.Display();
                 }
             }

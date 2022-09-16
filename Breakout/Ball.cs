@@ -1,18 +1,22 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Numerics;
 using breakout;
 using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Breakout
 {
     public class Ball
     {
-        private static readonly Vector2f StartingPosition = new Vector2f(400, 100);
+        private static readonly Vector2f StartingPosition = new Vector2f(250, 500);
         private static readonly int StartingHealth = 3;
-        private static readonly Vector2f StartingDirection = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+        private static readonly Vector2f StartingDirection = new Vector2f(1, -1) / MathF.Sqrt(2.0f);
         
         public Sprite Sprite;
+        private const float speed = 3.5f;s
+        public bool BallActive = false;
         public const float Diameter = 20f;
         public const float Radius = Diameter * 0.5f;
         public Vector2f Direction = StartingDirection;
@@ -20,12 +24,13 @@ namespace Breakout
         public int Score = 0;
         private Text gui;
 
-        public void Reset()
+        public void Reset(bool resetScore)
         {
-            Score = 0;
+            if (resetScore) Score = 0;
             Health = StartingHealth;
             Sprite.Position = StartingPosition;
-            Direction = StartingDirection;
+            Direction = StartingDirection * speed;
+            BallActive = false;
         }
         
         public Ball()
@@ -33,6 +38,7 @@ namespace Breakout
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/ball.png");
             Sprite.Position = StartingPosition;
+            Direction = StartingDirection * speed;
 
             Vector2f ballTextureSize = (Vector2f)Sprite.Texture.Size;
             Sprite.Origin = 0.5f * ballTextureSize;
@@ -51,42 +57,58 @@ namespace Breakout
 
         public void Update(float deltaTime, Paddle paddle)
         {
-            var newPos = Sprite.Position;
-            newPos += Direction * 100f * deltaTime;
-            if (newPos.X > Program.ScreenW - Radius) // Right wall
+            if (BallActive)
             {
-                newPos.X = Program.ScreenW - Radius;
-                Reflect(new Vector2f(-1, 0));
-            }
-            else if (newPos.X < Radius) // Left wall
-            {
-                newPos.X = Radius;
-                Reflect(new Vector2f(1, 0));
-            }
-            if (newPos.Y < Radius) // Top wall
-            {
-                newPos.Y = Radius;
-                Reflect(new Vector2f(0, 1));
-            }
-            else if (newPos.Y > Program.ScreenH - Radius) // Bottom wall
-            {
-                newPos.X = paddle.Sprite.Position.X - Radius;
-                newPos.Y = paddle.Sprite.Position.Y - Radius - 10;
-                if (new Random().Next() % 2 == 0)
+                var newPos = Sprite.Position;
+                newPos += Direction * 100f * deltaTime;
+                if (newPos.X > Program.ScreenW - Radius) // Right wall
                 {
-                    Direction.X = 1;
-                    Direction = Collision.Normalized(Direction);
+                    newPos.X = Program.ScreenW - Radius;
+                    Reflect(new Vector2f(-1, 0));
                 }
-                else // rand == 1
+                else if (newPos.X < Radius) // Left wall
                 {
-                    Direction.X = -1;
-                    Direction = Collision.Normalized(Direction);
+                    newPos.X = Radius;
+                    Reflect(new Vector2f(1, 0));
+                }
+                if (newPos.Y < Radius) // Top wall
+                {
+                    newPos.Y = Radius;
+                    Reflect(new Vector2f(0, 1));
+                }
+                else if (newPos.Y > Program.ScreenH - Radius) // Bottom wall
+                {
+                    newPos.X = paddle.Sprite.Position.X;
+                    newPos.Y = paddle.Sprite.Position.Y - Radius - 10;
+                    BallActive = false;
+                    if (new Random().Next() % 2 == 0)
+                    {
+                        Direction.X = 1;
+                        Direction = Collision.Normalized(Direction) * speed;
+                    }
+                    else // rand == 1
+                    {
+                        Direction.X = -1;
+                        Direction = Collision.Normalized(Direction) * speed;
+                    }
+
+                    Health--;
                 }
 
-                Health--;
+                Sprite.Position = newPos;
             }
+            else
+            {
+                Vector2f newPos;
+                newPos.X = paddle.Sprite.Position.X;
+                newPos.Y = paddle.Sprite.Position.Y - Radius - 20;
+                Sprite.Position = newPos;
 
-            Sprite.Position = newPos;
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
+                {
+                    BallActive = true;
+                }
+            }
             
         }
 
@@ -102,6 +124,13 @@ namespace Breakout
             gui.DisplayedString = $"Score: {Score}";
             gui.Position = new Vector2f(Program.ScreenW - gui.GetGlobalBounds().Width - 12, 8);
             target.Draw(gui);
+
+            if (!BallActive)
+            {
+                gui.DisplayedString = "Press space to launch ball";
+                gui.Position = new Vector2f(Program.ScreenW/2 - gui.GetGlobalBounds().Width/2, Program.ScreenH - 30);
+                target.Draw(gui);
+            }
         }
     }
 }

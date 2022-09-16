@@ -15,12 +15,20 @@ namespace Breakout
         private const float textureScale = 0.2f;
         private float widthModifier = 1f;
         private Vector2f size;
+        
+        private readonly static Vector2f StartingPosition = new Vector2f(Program.ScreenW / 2, Program.ScreenH - 100);
+        
+        public void Reset()
+        {
+            Sprite.Position = StartingPosition;
+            widthModifier = 1f;
+        }
 
         public Paddle()
         {
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/paddle.png");
-            Sprite.Position = new Vector2f(Program.ScreenW / 2, Program.ScreenH - 100);
+            Sprite.Position = StartingPosition;
 
             Vector2f paddleTextureSize = (Vector2f)Sprite.Texture.Size;
             Sprite.Origin = 0.5f * paddleTextureSize;
