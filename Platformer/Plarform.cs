@@ -5,6 +5,7 @@ namespace Platformer
 {
     public class Platform : Entity
     {
+        public override bool Solid => true;
         public Platform() : base("tileset")
         {
             sprite.TextureRect = new IntRect(0, 0, 18, 18);

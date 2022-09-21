@@ -8,13 +8,12 @@ namespace Platformer
         private readonly string textureName;
         protected readonly Sprite sprite;
         public bool Dead;
-
+        public virtual bool Solid => false;
         protected Entity(string textureName)
         {
             this.textureName = textureName;
             sprite = new Sprite();
         }
-        
         public Vector2f Position
         {
             get => sprite.Position; 
