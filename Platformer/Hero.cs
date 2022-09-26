@@ -11,7 +11,7 @@ namespace Platformer
         public const float JumpForce = 250.0f;
         public const float GravityForce = 400.0f;
         
-        private const int animationStopTime = 500;
+        private const float animationStopTime = 0.25f;
         private readonly IntRect frame1 = new IntRect(0, 0, 24, 24);
         private readonly IntRect frame2 = new IntRect(24, 0, 24, 24);
         
@@ -19,7 +19,7 @@ namespace Platformer
         private float verticalSpeed;
         private bool isGrounded = false;
         private bool isUpPressed = false;
-        private int walkingTimer = 0;
+        private float walkingTimer = 0;
         
         
 
@@ -105,7 +105,7 @@ namespace Platformer
                     walkingTimer = 0;
                     sprite.TextureRect = frame1;
                 }
-                walkingTimer++;
+                walkingTimer += deltaTime;
             }
             else
             {
