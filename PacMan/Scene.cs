@@ -51,6 +51,20 @@ namespace Pacman
             found = default(T);
             return false;
         }
+        
+        public IEnumerable<Entity> FindIntersects(FloatRect bounds) 
+        {
+            int lastEntity = entities.Count - 1;
+            for (int i = lastEntity; i >= 0; i--) // Iterate backwards so new elements can be added without disturbing
+            {
+                Entity entity = entities[i];
+                if (entity.Dead) continue;
+                if (entity.Bounds.Intersects(bounds)) 
+                {
+                    yield return entity;
+                }
+            }
+        }
 
         // Loop backwards through entities and remove all
         public void Clear()
