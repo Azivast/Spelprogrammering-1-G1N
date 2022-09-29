@@ -3,23 +3,65 @@ using SFML.Graphics;
 
 namespace Pacman
 {
-    public class Scene
+    public delegate void ValueChangedEvent(Scene scene, int value);
+    public sealed class Scene
     {
         private readonly List<Entity> entities;
         public readonly SceneLoader Loader;
         public readonly AssetManager Assets;
 
+        public event ValueChangedEvent EatCandy;
+        public event ValueChangedEvent GainScore;
+        public event ValueChangedEvent LoseHealth;
+        private int candyEaten;
+        private int scoreGained;
+        private int healthLost;
+        public void PublishCandyEaten(int amount) 
+            => candyEaten += amount;
+        public void PublishGainScore(int amount) 
+            => scoreGained += amount;
+        
+        public void PublishLoseHealth(int amount) 
+            => healthLost += amount;
+
         public Scene()
         {
             entities = new List<Entity>();
+            Loader = new SceneLoader();
+            Assets = new AssetManager();
         }
         
+        public void Spawn(Entity entity)
+        {
+            entity.Create(this);
+            entities.Add(entity);
+        }
+
         public void UpdateAll(float deltaTime)
         {
+            Loader.HandleSceneLoad(this);
+            
             for (int i = entities.Count - 1; i >= 0; i--)
             {
                 Entity entity = entities[i];
                 entity.Update(this, deltaTime);
+            }
+            
+            // TODO: REDUCE REPETITION, DELEGATES?
+            if (candyEaten != 0) 
+            {
+                EatCandy?.Invoke(this, candyEaten);
+                candyEaten = 0;
+            }
+            if (scoreGained != 0) 
+            {
+                GainScore?.Invoke(this, scoreGained);
+                scoreGained = 0;
+            }
+            if (healthLost != 0) 
+            {
+                LoseHealth?.Invoke(this, healthLost);
+                healthLost = 0;
             }
             
             // Goes through entities and removes once dead.
@@ -71,8 +113,10 @@ namespace Pacman
         {
             for (int i = entities.Count - 1; i >= 0; i--) {
                 Entity entity = entities[i];
-                entities.RemoveAt(i);
-                entity.Destroy(this);
+                if (!entity.DontDestroyOnLoad) {
+                    entities.RemoveAt(i);
+                    entity.Destroy(this);
+                }
             }
         }
     }

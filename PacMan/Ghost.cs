@@ -1,7 +1,69 @@
-﻿namespace Pacman
+﻿using System;
+using System.Collections.Generic;
+using SFML.Graphics;
+
+namespace Pacman
 {
     public class Ghost : Actor
     {
+        private float frozenTimer;
+
+        public Ghost() : base("pacman") {}
+        public override void Create(Scene scene)
+        {
+            direction = -1;
+            speed = 100.0f;
+            moving = true;
+            base.Create(scene);
+            sprite.TextureRect = new IntRect(36, 0, 18, 18);
+            
+            scene.EatCandy += (s, i) => frozenTimer = 5;
+
+        }
+
+        public override void Update(Scene scene, float deltaTime) 
+        {
+            base.Update(scene, deltaTime);
+            frozenTimer = MathF.Max(frozenTimer - deltaTime, 0.0f);
+        }
+
+        protected override int PickDirection(Scene scene)
+        {
+            // Check for valid moves
+            List<int> validMoves = new List<int>();
+            for (int i = 0; i < 4; i++) { 
+                if ((i + 2) % 4 == direction) continue; // Can't turn around 180 degrees
+                if (IsFree(scene, i)) validMoves.Add(i);
+            }
+            // Randomize which of the valid moves to make
+            int r = new Random().Next(0, validMoves.Count);
+            return validMoves[r];
+        }
         
+        protected override void CollideWith(Scene scene, Entity e) 
+        {
+            if (e is Pacman) 
+            {
+                if (frozenTimer <= 0)
+                {
+                    scene.PublishLoseHealth(1);
+                }
+                Reset();
+            }
+ 
+        }
+
+        public override void Render(RenderTarget target)
+        {
+            if (frozenTimer > 0.0f)
+            {
+                sprite.TextureRect = new IntRect(36, 18, 18, 18);
+            }
+            else
+            {
+                sprite.TextureRect = new IntRect(36, 0, 18, 18);
+            }
+            base.Render(target);
+        }
     }
 }

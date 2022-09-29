@@ -11,7 +11,6 @@ namespace Pacman
             base.Create(scene);
             sprite.TextureRect = new IntRect(54, 54, 18, 18);
         }
-        public override void Update(Scene scene, float deltaTime) {}
-    
+        public override void Update(Scene scene, float deltaTime) {} // disable collision checking for performance boost
     }
 }

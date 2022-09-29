@@ -8,6 +8,7 @@ namespace Pacman
         private string textureName = "";
         protected Sprite sprite;
         public bool Dead;
+        public bool DontDestroyOnLoad = false;
 
         public Vector2f Position
         {
@@ -22,7 +23,8 @@ namespace Pacman
 
         protected Entity(string textureName)
         {
-            
+            this.textureName = textureName;
+            sprite = new Sprite();
         }
         
         public virtual void Create(Scene scene)
