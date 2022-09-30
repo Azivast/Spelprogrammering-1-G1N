@@ -1,34 +1,22 @@
 ﻿using System.Collections.Generic;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace Pacman
 {
-    public delegate void ValueChangedEvent(Scene scene, int value);
     public sealed class Scene
     {
         private readonly List<Entity> entities;
         public readonly SceneLoader Loader;
         public readonly AssetManager Assets;
-
-        public event ValueChangedEvent EatCandy;
-        public event ValueChangedEvent GainScore;
-        public event ValueChangedEvent LoseHealth;
-        private int candyEaten;
-        private int scoreGained;
-        private int healthLost;
-        public void PublishCandyEaten(int amount) 
-            => candyEaten += amount;
-        public void PublishGainScore(int amount) 
-            => scoreGained += amount;
-        
-        public void PublishLoseHealth(int amount) 
-            => healthLost += amount;
+        public readonly EventManager Events;
 
         public Scene()
         {
             entities = new List<Entity>();
             Loader = new SceneLoader();
             Assets = new AssetManager();
+            Events = new EventManager();
         }
         
         public void Spawn(Entity entity)
@@ -41,29 +29,15 @@ namespace Pacman
         {
             Loader.HandleSceneLoad(this);
             
+            // Update entities
             for (int i = entities.Count - 1; i >= 0; i--)
             {
                 Entity entity = entities[i];
                 entity.Update(this, deltaTime);
             }
-            
-            // TODO: REDUCE REPETITION, DELEGATES?
-            if (candyEaten != 0) 
-            {
-                EatCandy?.Invoke(this, candyEaten);
-                candyEaten = 0;
-            }
-            if (scoreGained != 0) 
-            {
-                GainScore?.Invoke(this, scoreGained);
-                scoreGained = 0;
-            }
-            if (healthLost != 0) 
-            {
-                LoseHealth?.Invoke(this, healthLost);
-                healthLost = 0;
-            }
-            
+
+            Events.Update(this);
+
             // Goes through entities and removes once dead.
             for (int i = 0; i < entities.Count;)
             {

@@ -22,8 +22,8 @@ namespace Pacman
             scoreText.DisplayedString = "Score";
             currentHealth = maxHealth;
 
-            scene.LoseHealth += OnLoseHealth;
-            scene.GainScore += OnScoreGain;
+            scene.Events.LoseHealth += OnLoseHealth;
+            scene.Events.GainScore += OnScoreGain;
             
             base.Create(scene);
         }
@@ -50,7 +50,7 @@ namespace Pacman
             if (currentHealth <= 0)
             {
                 DontDestroyOnLoad = false;
-                scene.LoseHealth -= OnLoseHealth;
+                scene.Events.LoseHealth -= OnLoseHealth;
                 scene.Loader.Reload();
             }
         }

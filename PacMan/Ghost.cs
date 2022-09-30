@@ -7,6 +7,8 @@ namespace Pacman
     public class Ghost : Actor
     {
         private float frozenTimer;
+        private float resetTimer;
+        private const float RESETTIME = 1f;
 
         public Ghost() : base("pacman") {}
         public override void Create(Scene scene)
@@ -17,14 +19,17 @@ namespace Pacman
             base.Create(scene);
             sprite.TextureRect = new IntRect(36, 0, 18, 18);
             
-            scene.EatCandy += (s, i) => frozenTimer = 5;
-
+            scene.Events.EatCandy += (s, i) => frozenTimer = 5;
         }
 
-        public override void Update(Scene scene, float deltaTime) 
+        public override void Update(Scene scene, float deltaTime)
         {
+            if (resetTimer > 0) moving = false;
+            else moving = true;
+            
             base.Update(scene, deltaTime);
             frozenTimer = MathF.Max(frozenTimer - deltaTime, 0.0f);
+            resetTimer = MathF.Max(resetTimer - deltaTime, 0.0f);
         }
 
         protected override int PickDirection(Scene scene)
@@ -42,15 +47,25 @@ namespace Pacman
         
         protected override void CollideWith(Scene scene, Entity e) 
         {
-            if (e is Pacman) 
+            if (resetTimer <= 0 && e is Pacman) 
             {
                 if (frozenTimer <= 0)
                 {
-                    scene.PublishLoseHealth(1);
+                    scene.Events.PublishLoseHealth(1);
+                }
+                else
+                {
+                    scene.Events.PublishGainScore(10000);
                 }
                 Reset();
             }
  
+        }
+
+        protected override void Reset()
+        {
+            base.Reset();
+            resetTimer = RESETTIME;
         }
 
         public override void Render(RenderTarget target)

@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 
 namespace Pacman
 {
@@ -9,13 +10,14 @@ namespace Pacman
         
         public override void Create(Scene scene)
         {
-            sprite.TextureRect = new IntRect(54, 36, 18, 18);
+            sprite.TextureRect = new IntRect(56, 39, 14, 13);
+            sprite.Origin = new Vector2f(-2, -3);
             base.Create(scene);
         }
         
         protected override void CollideWith(Scene scene, Entity e) {
             if (e is Pacman) {
-                scene.PublishCandyEaten(1);
+                scene.Events.PublishCandyEaten(1);
                 Dead = true;
             }
         }

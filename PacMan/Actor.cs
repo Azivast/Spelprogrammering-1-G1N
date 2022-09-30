@@ -16,7 +16,7 @@ namespace Pacman
         protected float originalSpeed;
         protected Actor(string textureName) : base(textureName) {}
 
-        protected void Reset()
+        protected virtual void Reset()
         {
             wasAligned = false;
             Position = originalPosition;
