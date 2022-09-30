@@ -104,11 +104,10 @@ namespace Platformer
                 }
                 else if (!IsMoving)
                 {
-                    walkingTimer = 0;
+                    walkingTimer = ANIMATIONSTOPTIME;
                     sprite.TextureRect = frame1;
                 }
                 walkingTimer += deltaTime;
-                Console.WriteLine(deltaTime);
             }
             else
             {
