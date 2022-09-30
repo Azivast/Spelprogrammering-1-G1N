@@ -13,6 +13,7 @@
         public int ScoreGained;
         public int HealthLost;
         
+        // Called from other classes:
         public void PublishCandyEaten(int amount) 
             => CandyEaten += amount;
         public void PublishGainScore(int amount) 
@@ -24,6 +25,7 @@
     
         public void Update(Scene scene)
         {
+            // Invoke event when its condition has been met
             if (CandyEaten != 0) 
             {
                 EatCandy?.Invoke(scene, CandyEaten);

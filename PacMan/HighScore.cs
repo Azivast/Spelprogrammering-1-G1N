@@ -24,6 +24,7 @@ namespace Pacman
         
         public override void Create(Scene scene)
         {
+            // Initialize variables
             scoreText.Font = scene.Assets.LoadFont(font);
             scoreText.CharacterSize = 36;
             scoreText.Scale = new Vector2f(0.5f, 0.5f);
@@ -34,6 +35,7 @@ namespace Pacman
             restartText.Scale = new Vector2f(0.5f, 0.5f);
             restartText.DisplayedString = "Press SPACE to play again";
 
+            // Read stored high score and write over it if current score is higher.
             storedHighScore = ReadScoreFromFile();
             if (currentScore > storedHighScore)
             {
@@ -48,14 +50,14 @@ namespace Pacman
         {
             base.Update(scene, deltaTime);
             
-            
-            // TODO: CHECK IF PLAY AGAIN
+            // Check if play again
             if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
                 scene.Loader.Reload();
         }
-
+        
         public override void Render(RenderTarget target)
         {
+            // Print out high score and restart message.
             scoreText.DisplayedString = $"High Score: {storedHighScore}";
             scoreText.Position = new Vector2f(target.GetView().Center.X - scoreText.GetGlobalBounds().Width/2, 100);
             target.Draw(scoreText);

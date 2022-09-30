@@ -14,14 +14,16 @@ namespace Pacman
             textures = new Dictionary<string, Texture>();
             fonts = new Dictionary<string, Font>();
         }
-
+        
         public Texture LoadTexture(string name)
         {
+            // Return texture if already loaded
             if (textures.TryGetValue(name, out Texture found))
             {
                 return found;
             }
-
+            
+            // Otherwise load new texture and return that
             string fileName = $"assets/{name}.png";
             Texture texture = new Texture(fileName);
             textures.Add(name, texture);
@@ -30,11 +32,13 @@ namespace Pacman
 
         public Font LoadFont(string pixelFont)
         {
+            // Return font if already loaded
             if (fonts.TryGetValue(pixelFont, out Font found))
             {
                 return found;
             }
             
+            // Otherwise load new font and return that
             string fileName = $"assets/{pixelFont}.ttf";
             Font font = new Font(fileName);
             fonts.Add(pixelFont, font);

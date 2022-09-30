@@ -13,15 +13,11 @@ namespace Pacman
             speed = 100.0f;
             base.Create(scene);
             sprite.TextureRect = new IntRect(0, 0, 18, 18);
-            scene.Events.LoseHealth += OnLoseHealth;
+            scene.Events.LoseHealth += OnLoseHealth; // Subscribe to event
         }
-
-        public override void Update(Scene scene, float deltaTime)
+        
+        private void OnLoseHealth(Scene scene, int amount) 
         {
-            base.Update(scene, deltaTime);
-        }
-
-        private void OnLoseHealth(Scene scene, int amount) {
             Reset(); // inherited from actor.cs
         }
         
@@ -53,8 +49,8 @@ namespace Pacman
                 dir = 3;
                 moving = true;
             }
-            if (IsFree(scene, dir)) return dir;
-            if (!IsFree(scene, direction)) moving = false;
+            if (IsFree(scene, dir)) return dir; // Return direction if pacman won't collide
+            if (!IsFree(scene, direction)) moving = false; // Otherwise stop moving
             return direction;
         }
 
@@ -64,8 +60,8 @@ namespace Pacman
             
             if (animationTimer <= 0)
             {
-                frame += 18;
-                if (frame % 36 == 0)
+                frame += 18; // next frame is 18px away
+                if (frame % 36 == 0) // reset to first frame
                 {
                     frame = 0;
                 }
@@ -73,6 +69,7 @@ namespace Pacman
             }
 
 
+            // Change sprite based on direction.
             switch (direction)
             {
                 case 0: // right

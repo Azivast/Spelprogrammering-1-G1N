@@ -17,7 +17,7 @@ namespace Pacman
         }
         
         public virtual FloatRect Bounds => 
-            sprite.GetGlobalBounds();
+            sprite.GetGlobalBounds(); // Hitbox
         
         public virtual bool Solid => false;
 
@@ -32,13 +32,15 @@ namespace Pacman
             sprite.Texture = scene.Assets.LoadTexture(textureName);
         }
         
-        public virtual void Destroy(Scene scene) {}
+        public virtual void Destroy(Scene scene) {} // to be overriden
 
         protected virtual void CollideWith(Scene s, Entity other) {}
             // Empty -> Overridden by implementing classes
         
-        public virtual void Update(Scene scene, float deltaTime) {
-            foreach (Entity found in scene.FindIntersects(Bounds)) {
+        public virtual void Update(Scene scene, float deltaTime)
+        {
+            foreach (Entity found in scene.FindIntersects(Bounds)) 
+            {
                 CollideWith(scene, found);
             }
         }

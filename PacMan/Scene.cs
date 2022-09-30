@@ -36,6 +36,7 @@ namespace Pacman
                 entity.Update(this, deltaTime);
             }
 
+            // Check events
             Events.Update(this);
 
             // Goes through entities and removes once dead.
@@ -55,6 +56,8 @@ namespace Pacman
             }
         }
         
+        // Check for instance of type T among only entities
+        // Returns true if found and instance out as T found
         public bool FindByType<T>(out T found) where T : Entity
         {
             foreach (Entity entity in entities)
@@ -71,7 +74,7 @@ namespace Pacman
         public IEnumerable<Entity> FindIntersects(FloatRect bounds) 
         {
             int lastEntity = entities.Count - 1;
-            for (int i = lastEntity; i >= 0; i--) // Iterate backwards so new elements can be added without disturbing
+            for (int i = lastEntity; i >= 0; i--) // Iterate backwards so new elements can be added without disturbing loop
             {
                 Entity entity = entities[i];
                 if (entity.Dead) continue;

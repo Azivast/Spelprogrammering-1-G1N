@@ -13,8 +13,9 @@ namespace Pacman
 
         public SceneLoader() 
         {
+            // Associate character with their counterpart class.
             loaders = new Dictionary<char, Func<Entity>> 
-            {
+            { 
                 {'#', () => new Wall()},
                 {'p', () => new Pacman()},
                 {'c', () => new Candy()},
@@ -41,6 +42,7 @@ namespace Pacman
             string file = $"assets/{nextScene}.txt";
             Console.WriteLine($"Loading scene '{file}'");
 
+            // Loop through each line, character by character
             int row = 0;
             foreach (var line in File.ReadLines(file, Encoding.UTF8))
             {
@@ -48,15 +50,18 @@ namespace Pacman
                 {
                     char currentChar = line[column];
                     
+                    // Spawn entity based on character in scene file
                     if (Create(currentChar, out Entity entity))
                     {
                         entity.Position = new Vector2f(column * 18, row * 18);
                         scene.Spawn(entity);
                     }
                 }
+                // Move to next row
                 row++;
             }
 
+            // Spawn GUI if there isn't already one.
             if (!scene.FindByType<GUI>(out _))
             {
                 scene.Spawn(new GUI());

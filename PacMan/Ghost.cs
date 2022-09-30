@@ -8,8 +8,6 @@ namespace Pacman
     {
         private float frozenTimer;
         private bool IsFrozen = false;
-        private float resetTimer;
-        private const float RESETTIME = 1f;
 
         public Ghost() : base("pacman") {}
         public override void Create(Scene scene)
@@ -20,17 +18,14 @@ namespace Pacman
             base.Create(scene);
             sprite.TextureRect = new IntRect(36, 0, 18, 18);
             
+            // Subscribe to the EatCandy Event
             scene.Events.EatCandy += (s, i) => frozenTimer = 5;
         }
 
         public override void Update(Scene scene, float deltaTime)
         {
-            if (resetTimer > 0) moving = false;
-            else moving = true;
-            
             base.Update(scene, deltaTime);
             frozenTimer = MathF.Max(frozenTimer - deltaTime, 0.0f);
-            resetTimer = MathF.Max(resetTimer - deltaTime, 0.0f);
         }
 
         protected override int PickDirection(Scene scene)
@@ -46,27 +41,23 @@ namespace Pacman
             return validMoves[r];
         }
         
+        // Public events in case of collisions
         protected override void CollideWith(Scene scene, Entity e) 
         {
+            // Pacman and ghosts are immune while resetting
             if (resetTimer <= 0 && e is Pacman) 
             {
-                if (frozenTimer <= 0)
+                if (frozenTimer <= 0 && ((Pacman)e).ResetTimer <= 0) 
                 {
                     scene.Events.PublishLoseHealth(1);
                 }
-                else
+                else if (((Pacman)e).ResetTimer <= 0)
                 {
                     scene.Events.PublishGainScore(500);
                 }
                 Reset();
             }
  
-        }
-
-        protected override void Reset()
-        {
-            base.Reset();
-            resetTimer = RESETTIME;
         }
 
         public override void Render(RenderTarget target)
@@ -83,14 +74,15 @@ namespace Pacman
             
             if (animationTimer <= 0)
             {
-                frame += 18;
-                if (frame % 36 == 0)
+                frame += 18; // next frame is 18px away
+                if (frame % 36 == 0) // reset to first frame
                 {
                     frame = 0;
                 }
                 animationTimer = ANIMATIONTIME;
             }
 
+            // If frozen use those textures instead (located 18px down on sprite sheet)
             int y;
             if (IsFrozen) y = 18;
             else y = 0; 

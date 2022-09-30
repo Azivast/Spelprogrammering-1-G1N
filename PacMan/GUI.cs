@@ -22,6 +22,7 @@ namespace Pacman
             scoreText.DisplayedString = "Score";
             currentHealth = maxHealth;
 
+            // Subscribe to events
             scene.Events.LoseHealth += OnLoseHealth;
             scene.Events.GainScore += OnScoreGain;
             
@@ -31,7 +32,7 @@ namespace Pacman
         public override void Render(RenderTarget target)
         {
             sprite.Position = new Vector2f(36, 396);
-            for (int i = 0; i < maxHealth; i++) 
+            for (int i = 0; i < maxHealth; i++) // Render all hearts
             {
                 sprite.TextureRect = i < currentHealth
                     ? new IntRect(72, 36, 18, 18) // Full heart
@@ -62,6 +63,7 @@ namespace Pacman
         {
             currentScore += amount;
             
+            // If no coins remain -> reload scene
             if (!scene.FindByType<Coin>(out _)) {
                 DontDestroyOnLoad = true;
                 scene.Loader.Reload();
