@@ -15,10 +15,10 @@ namespace Breakout
         private static readonly Vector2f StartingDirection = new Vector2f(1, -1) / MathF.Sqrt(2.0f);
         
         public Sprite Sprite;
-        private const float speed = 3.5f;s
+        private const float SPEED = 3.0f;
         public bool BallActive = false;
-        public const float Diameter = 20f;
-        public const float Radius = Diameter * 0.5f;
+        public const float DIAMETER = 20f;
+        public const float RADIUS = DIAMETER * 0.5f;
         public Vector2f Direction = StartingDirection;
         public int Health = StartingHealth;
         public int Score = 0;
@@ -26,10 +26,13 @@ namespace Breakout
 
         public void Reset(bool resetScore)
         {
-            if (resetScore) Score = 0;
-            Health = StartingHealth;
+            if (resetScore)
+            {
+                Score = 0;
+                Health = StartingHealth;
+            }
             Sprite.Position = StartingPosition;
-            Direction = StartingDirection * speed;
+            Direction = StartingDirection * SPEED;
             BallActive = false;
         }
         
@@ -38,11 +41,11 @@ namespace Breakout
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/ball.png");
             Sprite.Position = StartingPosition;
-            Direction = StartingDirection * speed;
+            Direction = StartingDirection * SPEED;
 
             Vector2f ballTextureSize = (Vector2f)Sprite.Texture.Size;
             Sprite.Origin = 0.5f * ballTextureSize;
-            Sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
+            Sprite.Scale = new Vector2f(DIAMETER / ballTextureSize.X, DIAMETER / ballTextureSize.Y);
 
             gui = new Text();
             gui.CharacterSize = 24;
@@ -61,35 +64,35 @@ namespace Breakout
             {
                 var newPos = Sprite.Position;
                 newPos += Direction * 100f * deltaTime;
-                if (newPos.X > Program.ScreenW - Radius) // Right wall
+                if (newPos.X > Program.ScreenW - RADIUS) // Right wall
                 {
-                    newPos.X = Program.ScreenW - Radius;
+                    newPos.X = Program.ScreenW - RADIUS;
                     Reflect(new Vector2f(-1, 0));
                 }
-                else if (newPos.X < Radius) // Left wall
+                else if (newPos.X < RADIUS) // Left wall
                 {
-                    newPos.X = Radius;
+                    newPos.X = RADIUS;
                     Reflect(new Vector2f(1, 0));
                 }
-                if (newPos.Y < Radius) // Top wall
+                if (newPos.Y < RADIUS) // Top wall
                 {
-                    newPos.Y = Radius;
+                    newPos.Y = RADIUS;
                     Reflect(new Vector2f(0, 1));
                 }
-                else if (newPos.Y > Program.ScreenH - Radius) // Bottom wall
+                else if (newPos.Y > Program.ScreenH - RADIUS) // Bottom wall
                 {
                     newPos.X = paddle.Sprite.Position.X;
-                    newPos.Y = paddle.Sprite.Position.Y - Radius - 10;
+                    newPos.Y = paddle.Sprite.Position.Y - RADIUS - 10;
                     BallActive = false;
                     if (new Random().Next() % 2 == 0)
                     {
                         Direction.X = 1;
-                        Direction = Collision.Normalized(Direction) * speed;
+                        Direction = Collision.Normalized(Direction) * SPEED;
                     }
                     else // rand == 1
                     {
                         Direction.X = -1;
-                        Direction = Collision.Normalized(Direction) * speed;
+                        Direction = Collision.Normalized(Direction) * SPEED;
                     }
 
                     Health--;
@@ -101,7 +104,7 @@ namespace Breakout
             {
                 Vector2f newPos;
                 newPos.X = paddle.Sprite.Position.X;
-                newPos.Y = paddle.Sprite.Position.Y - Radius - 20;
+                newPos.Y = paddle.Sprite.Position.Y - RADIUS - 20;
                 Sprite.Position = newPos;
 
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Space))

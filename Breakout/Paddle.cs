@@ -11,8 +11,8 @@ namespace Breakout
     public class Paddle
     {
         public Sprite Sprite;
-        private const float speed = 300f;
-        private const float textureScale = 0.2f;
+        private const float SPEED = 300f;
+        private const float TEXTURESCALE = 0.2f;
         private float widthModifier = 1f;
         private Vector2f size;
         
@@ -32,7 +32,7 @@ namespace Breakout
 
             Vector2f paddleTextureSize = (Vector2f)Sprite.Texture.Size;
             Sprite.Origin = 0.5f * paddleTextureSize;
-            Sprite.Scale = new Vector2f(textureScale * widthModifier, textureScale);
+            Sprite.Scale = new Vector2f(TEXTURESCALE * widthModifier, TEXTURESCALE);
 
             size = new Vector2f(
                 Sprite.GetGlobalBounds().Width,
@@ -41,22 +41,25 @@ namespace Breakout
 
         public void Update( Ball ball, float deltaTime)
         {
+            // New movement from input
             var newPos = Sprite.Position;
             if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
-                newPos.X += deltaTime * speed;
+                newPos.X += deltaTime * SPEED;
             if (Keyboard.IsKeyPressed(Keyboard.Key.Left))
-                newPos.X -= deltaTime * speed;
+                newPos.X -= deltaTime * SPEED;
+            
             // Restrict paddle movement to within the window. Accounts for origin being in the middle of sprite.
             newPos.X = Math.Clamp(newPos.X, size.X/2, Program.ScreenW - size.X/2);
             
             // Check collision
-            if (Collision.CircleRectangle(ball.Sprite.Position, Ball.Radius,
+            if (Collision.CircleRectangle(ball.Sprite.Position, Ball.RADIUS,
                     this.Sprite.Position, size, out Vector2f hit))
             {
                 ball.Sprite.Position += hit;
                 ball.Reflect(hit.Normalized());
             }
 
+            // Move
             Sprite.Position = newPos;
         }
 

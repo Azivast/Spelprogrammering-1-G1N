@@ -29,14 +29,14 @@ namespace Breakout
                     ball.Update(deltaTime, paddle);
                     tile.Update(deltaTime, ball);
 
-                    if (ball.Health <= 0) // player lost
+                    if (ball.Health <= 0) // if player lost
                     {
                         ball.Reset(true);
                         paddle.Reset();
                         tile.Reset();
                     }
 
-                    if (tile.Sprites.Count == 0)
+                    if (tile.Sprites.Count == 0) // all tiles destroyed, will spawn new ones
                     {
                         ball.Reset(false);
                         tile.Reset();

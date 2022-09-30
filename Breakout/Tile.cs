@@ -32,11 +32,11 @@ namespace Breakout
             Texture blue = new Texture("assets/tileBlue.png");
 
             // Places tiles in a grid
-            for (int i = -2; i <= 2; i++) {
-                for (int j = -2; j <= 2; j++)
+            for (int i = -2; i <= 2; i++) { // column
+                for (int j = -2; j <= 2; j++) // row
                 {
                     Sprite sprite = new Sprite();
-                    switch (j)
+                    switch (j) // color depending on row
                     {
                         case -2:
                         case -1:
@@ -50,13 +50,14 @@ namespace Breakout
                             sprite.Texture = blue;
                             break;
                     }
-                    textureSize = (Vector2f)sprite.Texture.Size; 
+                    textureSize = (Vector2f)sprite.Texture.Size;
                     sprite.Origin = 0.5f * textureSize;
                     sprite.Scale = new Vector2f(textureScale , textureScale);
                     
+                    // calc position from row and column
                     var pos = new Vector2f(
-                        Program.ScreenW * 0.5f + i * 96.0f, 
-                        Program.ScreenH * 0.3f + j * 48.0f);
+                        (Program.ScreenW * 0.5f) + i * 96.0f, 
+                        (Program.ScreenH * 0.3f) + j * 48.0f);
 
                     sprite.Position = pos;
 
@@ -70,7 +71,7 @@ namespace Breakout
             for (int i = 0; i < Sprites.Count; i++) {
                 var pos = Sprites[i].Position;
                 if (Collision.CircleRectangle(
-                        ball.Sprite.Position, Ball.Radius,
+                        ball.Sprite.Position, Ball.RADIUS,
                         pos, Sprites[i].Origin, out Vector2f hit)) {
                     ball.Sprite.Position += hit;
                     ball.Reflect(hit.Normalized());
