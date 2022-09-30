@@ -7,11 +7,11 @@ namespace Platformer
 {
     public class Hero : Entity
     {
-        public const float WalkSpeed = 100.0f;
-        public const float JumpForce = 250.0f;
-        public const float GravityForce = 400.0f;
+        public const float WALKSPEED = 100.0f;
+        public const float JUMPFORCE = 250.0f;
+        public const float GRAVITYFORCE = 400.0f;
         
-        private const float animationStopTime = 0.25f;
+        private const float ANIMATIONSTOPTIME = 0.25f;
         private readonly IntRect frame1 = new IntRect(0, 0, 24, 24);
         private readonly IntRect frame2 = new IntRect(24, 0, 24, 24);
         
@@ -32,27 +32,29 @@ namespace Platformer
 
         public override void Update(Scene scene, float deltaTime)
         {
+            // Input, also checks if movement possible
             bool IsMoving = false;
             if (Keyboard.IsKeyPressed(Keyboard.Key.Left))
             {
-                scene.TryMove(this, new Vector2f(-WalkSpeed * deltaTime, 0));
+                scene.TryMove(this, new Vector2f(-WALKSPEED * deltaTime, 0));
                 faceRight = false;
                 IsMoving = true;
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
             {
-                scene.TryMove(this, new Vector2f(WalkSpeed * deltaTime, 0));
+                scene.TryMove(this, new Vector2f(WALKSPEED * deltaTime, 0));
                 faceRight = true;
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Left)) // Won't move (play animation) when pressing both directions at once.
                     IsMoving = false;
                 else IsMoving = true;
             }
-
+            
+            // Jumping
             if (Keyboard.IsKeyPressed(Keyboard.Key.Up))
             {
                 if (isGrounded && !isUpPressed)
                 {
-                    verticalSpeed = -JumpForce;
+                    verticalSpeed = -JUMPFORCE;
                     isUpPressed = true;
                 }
             }
@@ -60,8 +62,8 @@ namespace Platformer
             {
                 isUpPressed = false;
             }
-            verticalSpeed += GravityForce * deltaTime;
-            if (verticalSpeed > 500.0f) verticalSpeed = 500.0f;
+            verticalSpeed += GRAVITYFORCE * deltaTime;
+            if (verticalSpeed > 500.0f) verticalSpeed = 500.0f; // velocity cap
 
             isGrounded = false;
             Vector2f velocity = new Vector2f(0, verticalSpeed * deltaTime);
@@ -87,12 +89,12 @@ namespace Platformer
                 scene.Reload();
             }
             
-            // Imperfections collision makes the verticalSpeed (and isGrounded) flicker a slight amount. We therefore
+            // Imperfections in collision make the verticalSpeed (and isGrounded) flicker a slight amount. We therefore
             // need to filter it when using it for animations.
             bool isGroundedFiltered = verticalSpeed is <= 0.1f and >= -0.1f; 
             if (isGroundedFiltered)
             {
-                if (IsMoving && walkingTimer >= animationStopTime)
+                if (IsMoving && walkingTimer >= ANIMATIONSTOPTIME)
                 {
                     if (sprite.TextureRect == frame1)
                         sprite.TextureRect = frame2;
@@ -106,6 +108,7 @@ namespace Platformer
                     sprite.TextureRect = frame1;
                 }
                 walkingTimer += deltaTime;
+                Console.WriteLine(deltaTime);
             }
             else
             {
@@ -117,7 +120,7 @@ namespace Platformer
 
         public override void Render(RenderTarget target)
         {
-            sprite.Scale = new Vector2f(faceRight ? -1 : 1, 1);
+            sprite.Scale = new Vector2f(faceRight ? -1 : 1, 1); // ternary expression flip sprite towards travel direction.
 
             base.Render(target); // Use "Entity" implementation to make sure scaling is correct.
         }

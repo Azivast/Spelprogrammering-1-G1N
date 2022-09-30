@@ -29,11 +29,13 @@ namespace Platformer
 
         public Texture LoadTexture(string name)
         {
-            if (textures.TryGetValue(name, out Texture found))
+            // Return texture if texture already loaded.
+            if (textures.TryGetValue(name, out Texture found)) 
             {
                 return found;
             }
-
+            
+            //Otherwise, load new texture.
             string fileName = $"assets/{name}.png";
             Texture texture = new Texture(fileName);
             textures.Add(name, texture);
@@ -43,6 +45,8 @@ namespace Platformer
         public void UpdateAll(float deltaTime)
         {
             HandleSceneChange();
+            
+            // Update all entities.
             for (int i = entities.Count - 1; i >= 0; i--)
             {
                 Entity entity = entities[i];
@@ -54,7 +58,7 @@ namespace Platformer
             {
                 Entity entity = entities[i];
                 if (entity.Dead) entities.RemoveAt(i);
-                else i++; // Prevents skipping entities[i+1] when removing entities[i].
+                else i++; // Prevents skipping entities[i+1] when removing entities[i]
             }
         }
         
@@ -66,21 +70,25 @@ namespace Platformer
             }
         }
         
+        /// Moves as far as possible without colliding
         public bool TryMove(Entity entity, Vector2f movement)
         {
             entity.Position += movement;
             bool collided = false;
+            // Check against all entities
             for (int i = 0; i < entities.Count; i++) 
             {
                 Entity other = entities[i];
-                if (!other.Solid) continue;
-                if (other == entity) continue;
+                if (!other.Solid) continue; // skip if non-solid
+                if (other == entity) continue; // or self
                 FloatRect boundsA = entity.Bounds;
                 FloatRect boundsB = other.Bounds;
+                // Check collision
                 if (Collision.RectangleRectangle(boundsA, boundsB, out Collision.Hit hit)) 
                 {
+                    // Move player
                     entity.Position += hit.Normal * hit.Overlap;
-                    i = -1; // Check everything once again
+                    i = -1; // Check everything once again, 
                     collided = true;
                 }
             }
@@ -97,43 +105,50 @@ namespace Platformer
             HandleSceneChange();
         }
 
+        ///Checks for parameter T, where T must be a type of entity
         public bool FindByType<T>(out T found) where T : Entity
         {
             foreach (Entity entity in entities)
             {
+                //Checks if the specific entity is of type T (In this case typed), and if it is "Dead".
                 if (!entity.Dead && entity is T typed) {
                     found = typed;
                     return true;
                 }
             }
             found = default(T);
-            return false;
+            return false; // No entity of type were found
         }
-
+        
+        
         private void HandleSceneChange()
         {
-            if (nextScene == null) return;
+            if (nextScene == null) return; // No scene
+            
+            //Remove all entities
             entities.Clear();
+            
             Spawn(new Background());
 
             string file = $"assets/{nextScene}.txt";
             Console.WriteLine($"Loading scene '{file}'");
-
+            
+            // Read file to place entities line by line
             foreach (var line in File.ReadLines(file, Encoding.UTF8)) 
             {
-                string parsed = line.Trim();
+                string parsed = line.Trim(); // Remove leading and trailing white spaces
                 
-                if (parsed.Length <= 0)
+                if (parsed.Length <= 0) // do nothing if line empty
                     continue;
                 int commentAt = parsed.IndexOf('#');
-                if (commentAt >= 0)
+                if (commentAt >= 0) // Inline comments. Use everything before '#'
                 {
                     parsed = parsed.Substring(0, commentAt);
                     parsed = parsed.Trim();
                 }
                 string[] words = parsed.Split(" "); // Split string into an array. Seperated with [space]
 
-                switch (words[0])
+                switch (words[0]) // Spawn based with type based on character at index
                 {
                     case "w":
                         Spawn(new Platform { 
@@ -159,7 +174,7 @@ namespace Platformer
 
             }
             
-            
+            // Move to next scene
             currentScene = nextScene;
             nextScene = null;
         }

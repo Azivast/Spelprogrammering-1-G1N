@@ -15,11 +15,9 @@ namespace Platformer
                 window.Closed += (o, e) => window.Close();
                 window.SetView(new View(new Vector2f(200, 150), ScreenSize));
 
-                // TODO: Initialize
-                
+                // Initialize
                 Scene scene = new Scene();
                 scene.Load("level0");
-                
                 Clock clock = new Clock();
 
                 while (window.IsOpen)

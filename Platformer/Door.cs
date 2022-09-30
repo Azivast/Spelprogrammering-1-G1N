@@ -8,8 +8,6 @@ namespace Platformer
         public string NextRoom;
         private bool unlocked;
         
-        
-        
         public Door() : base("tileset")
         {
             sprite.TextureRect = new IntRect(180, 103, 18, 23);
@@ -18,6 +16,7 @@ namespace Platformer
 
         public override void Update(Scene scene, float deltaTime)
         {
+            // Move to next room if door is unlocked and player collides.
             if (scene.FindByType<Hero>(out Hero hero))
             {
                 if (unlocked && Collision.RectangleRectangle(Bounds, hero.Bounds, out _))
