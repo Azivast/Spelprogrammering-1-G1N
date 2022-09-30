@@ -8,6 +8,7 @@
         public event ValueChangedEvent EatCandy;
         public event ValueChangedEvent GainScore;
         public event ValueChangedEvent LoseHealth;
+        
         public int CandyEaten;
         public int ScoreGained;
         public int HealthLost;
@@ -16,7 +17,6 @@
             => CandyEaten += amount;
         public void PublishGainScore(int amount) 
             => ScoreGained += amount;
-        
         public void PublishLoseHealth(int amount) 
             => HealthLost += amount;
 

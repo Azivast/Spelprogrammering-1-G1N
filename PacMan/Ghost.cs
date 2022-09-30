@@ -7,6 +7,7 @@ namespace Pacman
     public class Ghost : Actor
     {
         private float frozenTimer;
+        private bool IsFrozen = false;
         private float resetTimer;
         private const float RESETTIME = 1f;
 
@@ -55,7 +56,7 @@ namespace Pacman
                 }
                 else
                 {
-                    scene.Events.PublishGainScore(10000);
+                    scene.Events.PublishGainScore(500);
                 }
                 Reset();
             }
@@ -70,15 +71,31 @@ namespace Pacman
 
         public override void Render(RenderTarget target)
         {
-            if (frozenTimer > 0.0f)
-            {
-                sprite.TextureRect = new IntRect(36, 18, 18, 18);
-            }
-            else
-            {
-                sprite.TextureRect = new IntRect(36, 0, 18, 18);
-            }
+            if (frozenTimer > 0.0f) IsFrozen = true;
+            else IsFrozen = false;
+            
             base.Render(target);
+        }
+        
+        protected override void Animate(float deltaTime)
+        {
+            base.Animate(deltaTime);
+            
+            if (animationTimer <= 0)
+            {
+                frame += 18;
+                if (frame % 36 == 0)
+                {
+                    frame = 0;
+                }
+                animationTimer = ANIMATIONTIME;
+            }
+
+            int y;
+            if (IsFrozen) y = 18;
+            else y = 0; 
+            
+            sprite.TextureRect = new IntRect(36+frame, y, 18, 18);
         }
     }
 }

@@ -7,24 +7,18 @@ namespace Pacman
 {
     public class Pacman : Actor
     {
-        private const float ANIMATIONTIME = 0.1f;
-        private float animationTimer;
-        private int frame = 0;
-        
         public Pacman() : base("pacman") {}
         public override void Create(Scene scene)
         {
             speed = 100.0f;
             base.Create(scene);
             sprite.TextureRect = new IntRect(0, 0, 18, 18);
-            animationTimer = ANIMATIONTIME;
             scene.Events.LoseHealth += OnLoseHealth;
         }
 
         public override void Update(Scene scene, float deltaTime)
         {
             base.Update(scene, deltaTime);
-            Animate(deltaTime);
         }
 
         private void OnLoseHealth(Scene scene, int amount) {
@@ -64,10 +58,9 @@ namespace Pacman
             return direction;
         }
 
-        private void Animate(float deltaTime)
+        protected override void Animate(float deltaTime)
         {
-            if (!moving) return;
-            animationTimer -= deltaTime;
+            base.Animate(deltaTime);
             
             if (animationTimer <= 0)
             {
@@ -76,7 +69,7 @@ namespace Pacman
                 {
                     frame = 0;
                 }
-                    animationTimer = ANIMATIONTIME;
+                animationTimer = ANIMATIONTIME;
             }
 
 

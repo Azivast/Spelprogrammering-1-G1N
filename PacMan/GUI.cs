@@ -51,7 +51,10 @@ namespace Pacman
             {
                 DontDestroyOnLoad = false;
                 scene.Events.LoseHealth -= OnLoseHealth;
-                scene.Loader.Reload();
+                
+                
+                scene.Clear();
+                scene.Spawn(new HighScore(currentScore));
             }
         }
         

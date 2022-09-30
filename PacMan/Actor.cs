@@ -14,6 +14,10 @@ namespace Pacman
         protected bool moving;
         protected Vector2f originalPosition;
         protected float originalSpeed;
+        
+        protected const float ANIMATIONTIME = 0.1f;
+        protected float animationTimer;
+        protected int frame = 0;
         protected Actor(string textureName) : base(textureName) {}
 
         protected virtual void Reset()
@@ -28,6 +32,7 @@ namespace Pacman
             base.Create(scene);
             originalPosition = Position;
             originalSpeed = speed;
+            animationTimer = ANIMATIONTIME;
             Reset();
         }
         
@@ -63,6 +68,12 @@ namespace Pacman
         }
         protected virtual int PickDirection(Scene scene) { return 0; }
 
+        protected virtual void Animate(float deltaTime)
+        {
+            if (!moving) return;
+            animationTimer -= deltaTime;
+        }
+
         public override void Update(Scene scene, float deltaTime)
         {
             base.Update(scene, deltaTime);
@@ -91,6 +102,8 @@ namespace Pacman
                 > 432 => new Vector2f(0, Position.Y),
                 _ => Position
             };
+            
+            Animate(deltaTime);
         }
     }
 }
