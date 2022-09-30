@@ -30,3 +30,19 @@ C:\Users\a22ollas\RiderProjects\Text-Based-Adventure\Based Adventure\obj\Debug\n
 C:\Users\a22ollas\RiderProjects\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\ref\Based Adventure.dll
 C:\Users\a22ollas\RiderProjects\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.pdb
 C:\Users\a22ollas\RiderProjects\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.genruntimeconfig.cache
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.exe
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.deps.json
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.runtimeconfig.json
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.runtimeconfig.dev.json
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.dll
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\bin\Debug\net5.0\Based Adventure.pdb
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.csproj.AssemblyReference.cache
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.GeneratedMSBuildEditorConfig.editorconfig
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.AssemblyInfoInputs.cache
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.AssemblyInfo.cs
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.csproj.CoreCompileInputs.cache
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.dll
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\refint\Based Adventure.dll
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.pdb
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\Based Adventure.genruntimeconfig.cache
+\\StudentNAS1\StudentHome\2022\a22ollas\Desktop\Spelprogrammering 1 G1N - LABB\Text-Based-Adventure\Based Adventure\obj\Debug\net5.0\ref\Based Adventure.dll

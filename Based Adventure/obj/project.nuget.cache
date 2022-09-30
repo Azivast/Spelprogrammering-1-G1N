@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Fjw4+13pQRTcF+yk3+znH5XuXjAf2jnfvk0l97wOsTX5wT+HWWeP7vIkB2yVDKtVQ14TSQzsV5QAC8QfJG7TSA==",
+  "dgSpecHash": "NvJXVZj77i4z8zrgJczRAAXV6Hd0jjooy0VP2UAwzG6ZaGHh5TBbWIVH6GbjpW2SwYK3B/3Y3qxcUCGb06WKoA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\a22ollas\\RiderProjects\\Text-Based-Adventure\\Based Adventure\\Based Adventure.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "\\\\StudentNAS1\\StudentHome\\2022\\a22ollas\\Desktop\\Spelprogrammering 1 G1N - LABB\\Text-Based-Adventure\\Based Adventure\\Based Adventure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\a22ollas\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
   "logs": []
 }

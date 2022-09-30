@@ -54,9 +54,6 @@ namespace Based_Adventure
                 do
                 {
                     playerChoice = Program.Ask("What would you like to do? Attack/Dodge/Parry/Heal/Leave: ").ToLower();
-                    int roll = Program.RollD6();
-                    if (hero.Items.Contains("Blessed Amulet")); // higher chance of success with blessed amulet
-                        roll++;
                     // Calc attack damage for this round.
                     int monsterAttack = enemy.EnemyTurn(hero);
                     switch (playerChoice)

@@ -16,7 +16,7 @@ namespace Based_Adventure
             Health = maxHealth;
         }
         
-        // Attacks or Defends based on random chance
+        /// Attacks or Defends based on random chance
         public int EnemyTurn(Hero hero)
         {
             int roll = Program.RollD6();
